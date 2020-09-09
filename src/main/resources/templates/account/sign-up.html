@@ -13,7 +13,7 @@
 <body class="bg-light">
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <a class="navbar-brand" href="/" th:href="@{/}">
-        <img src="/images/logo_nav.jpg" width="30" height="30">
+        <img src="/images/logo_nav.png" width="30" height="30">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -45,7 +45,7 @@
     </div>
     <div class="row justify-content-center">
         <form class="needs-validation col-sm-6" action="#"
-              th:action="@{/signup}" th:object="${signUpForm}" method="post" novalidate>
+              th:action="@{/sign-up}" th:object="${signUpForm}" method="post" novalidate>
             <div class="form-group">
                 <label for="nickname">닉네임</label>
                 <input id="nickname" type="text" th:field="*{nickname}" class="form-control"
