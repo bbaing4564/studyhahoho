@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -22,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 class AccountControllerTest {
 
     @Autowired private MockMvc mockMvc;
@@ -85,5 +87,47 @@ class AccountControllerTest {
         assertNotNull(account.getEmailCheckToken());
 
         then(javaMailSender).should().send(any(SimpleMailMessage.class));
+    }
+
+    @Test
+    @DisplayName("인증 메일 확인_입력값 오류")
+    void 인증_메일_확인_입력값_오류() throws Exception {
+        // given
+
+        
+        // when
+
+        // then
+        mockMvc.perform(get("/check-email-token")
+                .param("token", "hahahoho")
+                .param("email", "email@email.com"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("error"))
+                .andExpect(view().name("account/checked-email"));
+    }
+
+    @Test
+    @DisplayName("인증 메일 확인_입력값 정상")
+    void 인증_메일_확인_입력값_정상() throws Exception {
+        // given
+        Account account = Account.builder()
+                .email("test@email.com")
+                .nickname("hahoho")
+                .password("12341234")
+                .build();
+
+        // when
+        Account newAccount = accountRepository.save(account);
+        newAccount.generateEmailCheckToken();
+
+        // then
+        mockMvc.perform(get("/check-email-token")
+                .param("token", newAccount.getEmailCheckToken())
+                .param("email", newAccount.getEmail()))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeDoesNotExist("error"))
+                .andExpect(model().attributeExists("numberOfUser"))
+                .andExpect(model().attributeExists("nickname"))
+                .andExpect(view().name("account/checked-email"));
     }
 }
