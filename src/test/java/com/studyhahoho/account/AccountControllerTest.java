@@ -124,7 +124,7 @@ class AccountControllerTest {
                 .password("12341234")
                 .build();
 
-        // when
+        // whe
         Account newAccount = accountRepository.save(account);
         newAccount.generateEmailCheckToken();
 
