@@ -1,6 +1,7 @@
 package com.studyhahoho.account;
 
 import com.studyhahoho.domain.Account;
+import com.studyhahoho.settings.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -78,5 +79,17 @@ public class AccountService implements UserDetailsService {
     public void completeSignUp(Account account) {
         account.completeSignUp();
         login(account);
+    }
+
+    public void updateProfile(Account account, Profile profile) {
+        account.setUrl(profile.getUrl());
+        account.setOccupation(profile.getOccupation());
+        account.setBio(profile.getBio());
+        account.setLocation(profile.getLocation());
+
+        //  TODO 이미지 수정
+        accountRepository.save(account);
+
+        // TODO one more thing
     }
 }
