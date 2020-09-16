@@ -1,5 +1,6 @@
 package com.studyhahoho.account;
 
+import com.studyhahoho.account.form.SignUpForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

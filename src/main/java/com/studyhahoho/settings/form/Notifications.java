@@ -1,4 +1,4 @@
-package com.studyhahoho.settings;
+package com.studyhahoho.settings.form;
 
 import lombok.Data;
 

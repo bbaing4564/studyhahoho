@@ -1,8 +1,9 @@
 package com.studyhahoho.account;
 
+import com.studyhahoho.account.form.SignUpForm;
 import com.studyhahoho.domain.Account;
-import com.studyhahoho.settings.Notifications;
-import com.studyhahoho.settings.Profile;
+import com.studyhahoho.settings.form.Notifications;
+import com.studyhahoho.settings.form.Profile;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.mail.SimpleMailMessage;

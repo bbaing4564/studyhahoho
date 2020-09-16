@@ -1,5 +1,6 @@
 package com.studyhahoho.account;
 
+import com.studyhahoho.account.form.SignUpForm;
 import com.studyhahoho.domain.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 
 @Controller
 @RequiredArgsConstructor

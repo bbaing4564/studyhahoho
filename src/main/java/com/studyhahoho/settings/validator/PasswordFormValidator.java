@@ -1,5 +1,6 @@
-package com.studyhahoho.settings;
+package com.studyhahoho.settings.validator;
 
+import com.studyhahoho.settings.form.PasswordForm;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

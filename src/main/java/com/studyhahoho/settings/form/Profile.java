@@ -1,8 +1,6 @@
-package com.studyhahoho.settings;
+package com.studyhahoho.settings.form;
 
-import com.studyhahoho.domain.Account;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 @Data
