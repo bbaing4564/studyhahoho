@@ -1,16 +1,23 @@
 package com.studyhahoho.settings;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.studyhahoho.WithAccount;
 import com.studyhahoho.account.AccountRepository;
+import com.studyhahoho.account.AccountService;
 import com.studyhahoho.domain.Account;
+import com.studyhahoho.domain.Tag;
+import com.studyhahoho.settings.form.TagForm;
+import com.studyhahoho.tag.TagRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -19,6 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 class SettingsControllerTest {
@@ -26,6 +34,9 @@ class SettingsControllerTest {
     @Autowired MockMvc mockMvc;
     @Autowired AccountRepository accountRepository;
     @Autowired PasswordEncoder passwordEncoder;
+    @Autowired ObjectMapper objectMapper;
+    @Autowired TagRepository tagRepository;
+    @Autowired AccountService accountService;
 
     @AfterEach
     void afterEach() {
@@ -193,5 +204,63 @@ class SettingsControllerTest {
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeExists("account"))
                 .andExpect(model().attributeExists("nicknameForm"));
+    }
+
+    @WithAccount("hahoho")
+    @Test
+    @DisplayName("계정의 태그 수정 폼")
+    void 계정의_태그_수정_폼() throws Exception {
+        // given
+        mockMvc.perform(get(SettingsController.SETTINGS_TAGS_URL))
+        // when
+
+        // then
+            .andExpect(view().name(SettingsController.SETTINGS_TAGS_VIEW_NAME))
+            .andExpect(model().attributeExists("account"))
+            .andExpect(model().attributeExists("whitelist"))
+            .andExpect(model().attributeExists("tags"));    
+    }
+
+    @WithAccount("hahoho")
+    @Test
+    @DisplayName("계정에 태그 추가")
+    void 계정에_태그_추가() throws Exception {
+        // given
+        TagForm tagForm = new TagForm();
+        tagForm.setTagTitle("newTag");
+        mockMvc.perform(post(SettingsController.SETTINGS_TAGS_URL + "/add")
+        // when
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(tagForm))
+                .with(csrf()))
+        // then
+                .andExpect(status().isOk());
+
+        Tag newTag = tagRepository.findByTitle("newTag");
+        assertNotNull(newTag);
+        Account hahoho = accountRepository.findByNickname("hahoho");
+        assertTrue(hahoho.getTags().contains(newTag));
+    }
+
+    @WithAccount("hahoho")
+    @Test
+    @DisplayName("계정에 태그 삭제")
+    void 계정에_태그_삭제() throws Exception {
+        // given
+        Account hahoho = accountRepository.findByNickname("hahoho");
+        Tag newTag = tagRepository.save(Tag.builder().title("newTag").build());
+        accountService.addTag(hahoho, newTag);
+        assertTrue(hahoho.getTags().contains(newTag));
+        // when
+        TagForm tagForm = new TagForm();
+        tagForm.setTagTitle("newTag");
+        mockMvc.perform(post(SettingsController.SETTINGS_TAGS_URL + "/remove")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(tagForm))
+                .with(csrf()))
+        // then
+                .andExpect(status().isOk());
+
+        assertFalse(hahoho.getTags().contains(newTag));
     }
 }
