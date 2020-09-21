@@ -3,6 +3,7 @@ package com.studyhahoho.account;
 import com.studyhahoho.account.form.SignUpForm;
 import com.studyhahoho.domain.Account;
 import com.studyhahoho.domain.Tag;
+import com.studyhahoho.domain.Zone;
 import com.studyhahoho.settings.form.Notifications;
 import com.studyhahoho.settings.form.Profile;
 import lombok.RequiredArgsConstructor;
@@ -113,18 +114,38 @@ public class AccountService implements UserDetailsService {
         javaMailSender.send(mailMessage);
     }
 
+    private Optional<Account> getById(Account account) {
+        return accountRepository.findById(account.getId());
+    }
+
     public void addTag(Account account, Tag tag) {
-        Optional<Account> byId = accountRepository.findById(account.getId());
+        Optional<Account> byId = getById(account);
         byId.ifPresent(a -> a.getTags().add(tag));
     }
 
     public Set<Tag> getTags(Account account) {
-        Optional<Account> byId = accountRepository.findById(account.getId());
+        Optional<Account> byId = getById(account);
         return byId.orElseThrow().getTags();
     }
 
     public void removeTag(Account account, Tag tag) {
-        Optional<Account> byId = accountRepository.findById(account.getId());
+        Optional<Account> byId = getById(account);
         byId.ifPresent(a -> a.getTags().remove(tag));
     }
+
+    public Set<Zone> getZones(Account account) {
+        Optional<Account> byId = getById(account);
+        return byId.orElseThrow().getZones();
+    }
+
+    public void addZone(Account account, Zone zone) {
+        Optional<Account> byId = getById(account);
+        byId.ifPresent(a -> a.getZones().add(zone));
+    }
+
+    public void removeZone(Account account, Zone zone) {
+        Optional<Account> byId = getById(account);
+        byId.ifPresent(a -> a.getZones().remove(zone));
+    }
+
 }
