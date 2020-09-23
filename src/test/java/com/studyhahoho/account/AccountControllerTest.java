@@ -1,6 +1,8 @@
 package com.studyhahoho.account;
 
 import com.studyhahoho.domain.Account;
+import com.studyhahoho.mail.EmailMessage;
+import com.studyhahoho.mail.EmailService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,9 @@ class AccountControllerTest {
 
     @MockBean
     JavaMailSender javaMailSender;
+
+    @MockBean
+    EmailService emailService;
 
     @Test
     @DisplayName("회원 가입 화면 출력 테스트")
@@ -93,7 +98,7 @@ class AccountControllerTest {
         assertNotEquals(account.getPassword(), "12341234");
         assertNotNull(account.getEmailCheckToken());
 
-        then(javaMailSender).should().send(any(SimpleMailMessage.class));
+        then(emailService).should().sendEmail(any(EmailMessage.class));
     }
 
     @Test
