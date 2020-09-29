@@ -89,13 +89,10 @@ public class AccountController {
 
     @GetMapping("/profile/{nickname}")
     public String viewProfile(@PathVariable String nickname, Model model, @CurrentAccount Account account) {
-        Account byNickname = accountRepository.findByNickname(nickname);
-        if (nickname == null) {
-            throw new IllegalArgumentException("해당 사용자가 존재하지 않습니다.");
-        }
+        Account accountToView = accountService.getAccount(nickname);
 
-        model.addAttribute(byNickname);
-        model.addAttribute("isOwner", byNickname.equals(account));
+        model.addAttribute(accountToView);
+        model.addAttribute("isOwner",accountToView.equals(account));
         return "/account/profile";
     }
 
@@ -114,7 +111,7 @@ public class AccountController {
 
         if (!account.canSendConfirmEmail()) {
             model.addAttribute("error", "이메일 로그인은 1시간 뒤에 사용할 수 있습니다.");
-            // return "account/email-login";
+            return "account/email-login";
         }
 
         accountService.sendLoginLink(account);
