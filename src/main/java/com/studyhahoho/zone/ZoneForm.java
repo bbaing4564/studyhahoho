@@ -1,4 +1,4 @@
-package com.studyhahoho.settings.form;
+package com.studyhahoho.zone;
 
 import com.studyhahoho.domain.Zone;
 import lombok.Data;

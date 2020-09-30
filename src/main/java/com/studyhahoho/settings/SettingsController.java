@@ -10,7 +10,10 @@ import com.studyhahoho.domain.Zone;
 import com.studyhahoho.settings.form.*;
 import com.studyhahoho.settings.validator.NicknameValidator;
 import com.studyhahoho.settings.validator.PasswordFormValidator;
+import com.studyhahoho.tag.TagForm;
 import com.studyhahoho.tag.TagRepository;
+import com.studyhahoho.tag.TagService;
+import com.studyhahoho.zone.ZoneForm;
 import com.studyhahoho.zone.ZoneRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -47,6 +50,7 @@ public class SettingsController {
     private final TagRepository tagRepository;
     private final ZoneRepository zoneRepository;
     private final ObjectMapper objectMapper;
+    private final TagService tagService;
 
     @InitBinder("passwordForm")
     public void passwordFormInitBinder(WebDataBinder webDataBinder) {
@@ -154,12 +158,7 @@ public class SettingsController {
     @PostMapping(TAGS + "/add")
     @ResponseBody
     public ResponseEntity addTag(@CurrentAccount Account account, @RequestBody TagForm tagForm) {
-        String title = tagForm.getTagTitle();
-        Tag tag = tagRepository.findByTitle(title);
-        if (tag == null) {
-            tag = tagRepository.save(Tag.builder().title(title).build());
-        }
-
+        Tag tag = tagService.findCreateOrNew(tagForm.getTagTitle());
         accountService.addTag(account, tag);
         return ResponseEntity.ok().build();
     }
