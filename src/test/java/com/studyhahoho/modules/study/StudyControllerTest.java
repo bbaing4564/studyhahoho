@@ -1,6 +1,7 @@
 package com.studyhahoho.modules.study;
 
 import com.studyhahoho.WithAccount;
+import com.studyhahoho.infra.AbstractContainerBaseTest;
 import com.studyhahoho.infra.MockMvcTest;
 import com.studyhahoho.modules.account.Account;
 import com.studyhahoho.modules.account.AccountFactory;
@@ -17,7 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @MockMvcTest
-public class StudyControllerTest {
+public class StudyControllerTest extends AbstractContainerBaseTest {
 
     @Autowired MockMvc mockMvc;
     @Autowired StudyService studyService;

@@ -1,6 +1,7 @@
 package com.studyhahoho.modules.event;
 
 import com.studyhahoho.WithAccount;
+import com.studyhahoho.infra.AbstractContainerBaseTest;
 import com.studyhahoho.infra.MockMvcTest;
 import com.studyhahoho.modules.account.Account;
 import com.studyhahoho.modules.account.AccountFactory;
@@ -21,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @MockMvcTest
-class EventControllerTest {
+class EventControllerTest extends AbstractContainerBaseTest {
     
     @Autowired EventService eventService;
     @Autowired EnrollmentRepository enrollmentRepository;

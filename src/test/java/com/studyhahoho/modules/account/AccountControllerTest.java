@@ -1,5 +1,6 @@
 package com.studyhahoho.modules.account;
 
+import com.studyhahoho.infra.AbstractContainerBaseTest;
 import com.studyhahoho.infra.MockMvcTest;
 import com.studyhahoho.infra.mail.EmailMessage;
 import com.studyhahoho.infra.mail.EmailService;
@@ -23,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @MockMvcTest
-class AccountControllerTest {
+class AccountControllerTest extends AbstractContainerBaseTest {
 
     @Autowired MockMvc mockMvc;
     @Autowired AccountRepository accountRepository;
