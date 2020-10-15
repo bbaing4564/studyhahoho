@@ -2,6 +2,7 @@ package com.studyhahoho.modules.account;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.studyhahoho.WithAccount;
+import com.studyhahoho.infra.MockMvcTest;
 import com.studyhahoho.modules.tag.Tag;
 import com.studyhahoho.modules.tag.TagForm;
 import com.studyhahoho.modules.tag.TagRepository;
@@ -13,12 +14,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import static com.studyhahoho.modules.account.SettingsController.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,9 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@Transactional
-@SpringBootTest
-@AutoConfigureMockMvc
+@MockMvcTest
 class SettingsControllerTest {
 
     @Autowired MockMvc mockMvc;
