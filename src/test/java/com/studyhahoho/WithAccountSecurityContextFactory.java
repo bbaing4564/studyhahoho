@@ -1,7 +1,7 @@
 package com.studyhahoho;
 
-import com.studyhahoho.account.AccountService;
-import com.studyhahoho.account.form.SignUpForm;
+import com.studyhahoho.modules.account.AccountService;
+import com.studyhahoho.modules.account.form.SignUpForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
