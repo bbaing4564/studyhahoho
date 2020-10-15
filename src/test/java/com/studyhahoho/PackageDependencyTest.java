@@ -15,12 +15,19 @@ public class PackageDependencyTest {
     private static final String ACCOUNT = "..modules.account..";
     private static final String TAG = "..modules.tag..";
     private static final String ZONE = "..modules.zone..";
+    private static final String MODULES = "com.studyhahoho.modules..";
 
 
     @ArchTest
     ArchRule studyPackageRule = classes().that().resideInAPackage(STUDY)
             .should().onlyBeAccessed().byClassesThat()
             .resideInAnyPackage(STUDY, EVENT);
+
+    @ArchTest
+    ArchRule modulePackageRule = classes().that().resideInAPackage(MODULES)
+            .should().onlyBeAccessed().byClassesThat()
+            .resideInAnyPackage(MODULES);
+
 
     @ArchTest
     ArchRule eventPackageRule = classes().that().resideInAPackage(EVENT)

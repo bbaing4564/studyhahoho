@@ -1,5 +1,6 @@
 package com.studyhahoho;
 
+import com.studyhahoho.modules.account.WithAccountSecurityContextFactory;
 import org.springframework.security.test.context.support.WithSecurityContext;
 
 import java.lang.annotation.Retention;
