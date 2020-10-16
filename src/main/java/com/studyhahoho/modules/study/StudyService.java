@@ -2,9 +2,9 @@ package com.studyhahoho.modules.study;
 
 import com.studyhahoho.modules.account.Account;
 import com.studyhahoho.modules.study.event.StudyCreatedEvent;
+import com.studyhahoho.modules.study.form.StudyDescriptionForm;
 import com.studyhahoho.modules.tag.Tag;
 import com.studyhahoho.modules.zone.Zone;
-import com.studyhahoho.modules.study.form.StudyDescriptionForm;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
@@ -27,7 +27,6 @@ public class StudyService {
     public Study createNewStudy(Study study, Account account) {
         Study newStudy = studyRepository.save(study);
         newStudy.addManager(account);
-        eventPublisher.publishEvent(new StudyCreatedEvent(newStudy));
         return newStudy;
     }
 
@@ -113,6 +112,7 @@ public class StudyService {
 
     public void publish(Study study) {
         study.publish();
+        this.eventPublisher.publishEvent(new StudyCreatedEvent(study));
     }
 
     public void close(Study study) {
