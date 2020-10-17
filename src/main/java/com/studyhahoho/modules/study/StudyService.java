@@ -2,6 +2,7 @@ package com.studyhahoho.modules.study;
 
 import com.studyhahoho.modules.account.Account;
 import com.studyhahoho.modules.study.event.StudyCreatedEvent;
+import com.studyhahoho.modules.study.event.StudyUpdateEvent;
 import com.studyhahoho.modules.study.form.StudyDescriptionForm;
 import com.studyhahoho.modules.tag.Tag;
 import com.studyhahoho.modules.zone.Zone;
@@ -44,6 +45,7 @@ public class StudyService {
 
     public void updateStudyDescription(Study study, StudyDescriptionForm studyDescriptionForm) {
         modelMapper.map(studyDescriptionForm, study);
+        eventPublisher.publishEvent(new StudyUpdateEvent(study, "스터디 소개를 수정했습니다."));
     }
 
     public void updateStudyImage(Study study, String image) {
@@ -117,14 +119,17 @@ public class StudyService {
 
     public void close(Study study) {
         study.close();
+        eventPublisher.publishEvent(new StudyUpdateEvent(study, "스터디가 종료되었습니다."));
     }
 
     public void startRecruit(Study study) {
         study.startRecruit();
+        eventPublisher.publishEvent(new StudyUpdateEvent(study, "인원 모집을 시작합니다."));
     }
 
     public void stopRecruit(Study study) {
         study.stopRecruit();
+        eventPublisher.publishEvent(new StudyUpdateEvent(study, "인원 모집을 종료했습니다."));
     }
 
     public boolean isValidPath(String newPath) {
