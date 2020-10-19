@@ -27,6 +27,7 @@ public class Study {
     private Long id;
 
     @ManyToMany
+    @Builder.Default
     private Set<Account> managers = new HashSet<>();
 
     @ManyToMany
@@ -46,9 +47,11 @@ public class Study {
     private String image;
 
     @ManyToMany
+    @Builder.Default
     private Set<Tag> tags = new HashSet<>();
 
     @ManyToMany
+    @Builder.Default
     private Set<Zone> zones = new HashSet<>();
 
     private LocalDateTime publishedDateTime;
@@ -64,6 +67,8 @@ public class Study {
     private boolean closed;
 
     private boolean useBanner;
+
+    private int memberCount;
 
     public void addManager(Account account) {
         this.managers.add(account);
@@ -138,10 +143,12 @@ public class Study {
 
     public void addMember(Account account) {
         this.getMembers().add(account);
+        this.memberCount++;
     }
 
     public void removeMember(Account account) {
         this.getMembers().remove(account);
+        this.memberCount--;
     }
 
     public boolean isManagedBy(Account account) {

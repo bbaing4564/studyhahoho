@@ -5,8 +5,10 @@ import com.studyhahoho.modules.study.event.StudyCreatedEvent;
 import com.studyhahoho.modules.study.event.StudyUpdateEvent;
 import com.studyhahoho.modules.study.form.StudyDescriptionForm;
 import com.studyhahoho.modules.tag.Tag;
+import com.studyhahoho.modules.tag.TagRepository;
 import com.studyhahoho.modules.zone.Zone;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.utility.RandomString;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.access.AccessDeniedException;
@@ -24,6 +26,7 @@ public class StudyService {
     private final StudyRepository studyRepository;
     private final ModelMapper modelMapper;
     private final ApplicationEventPublisher eventPublisher;
+    private final TagRepository tagRepository;
 
     public Study createNewStudy(Study study, Account account) {
         Study newStudy = studyRepository.save(study);
@@ -171,6 +174,22 @@ public class StudyService {
         Study study = studyRepository.findStudyOnlyByPath(path);
         checkIfExistStudy(path, study);
         return study;
+    }
+
+    public void generateTestStudies(Account account) {
+        for (int i = 0; i < 30; i++) {
+            String randomValue = RandomString.make(5);
+            Study study = Study.builder()
+                    .title("테스트 스터디 " + randomValue)
+                    .path("test-" + randomValue)
+                    .shortDescription("study for test")
+                    .fullDescription("test")
+                    .build();
+            study.publish();
+            Study newStudy = this.createNewStudy(study, account);
+            Tag jpa = tagRepository.findByTitle("JPA");
+            newStudy.getTags().add(jpa);
+        }
     }
 }
 
