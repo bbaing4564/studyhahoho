@@ -2,7 +2,6 @@ package com.studyhahoho.modules.study;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.JPQLQuery;
-import com.studyhahoho.modules.account.QAccount;
 import com.studyhahoho.modules.tag.QTag;
 import com.studyhahoho.modules.zone.QZone;
 import org.springframework.data.domain.Page;
@@ -25,7 +24,6 @@ public class StudyRepositoryExtensionImpl extends QuerydslRepositorySupport impl
                 .or(study.zones.any().localNameOfCity.containsIgnoreCase(keyword)))
                 .leftJoin(study.tags, QTag.tag).fetchJoin()
                 .leftJoin(study.zones, QZone.zone).fetchJoin()
-                .leftJoin(study.members, QAccount.account).fetchJoin()
                 .distinct();
         JPQLQuery<Study> pageableQuery = getQuerydsl().applyPagination(pageable, query);
         QueryResults<Study> fetchResults = pageableQuery.fetchResults();
