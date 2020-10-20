@@ -43,7 +43,7 @@
                         </a>
                     </li>
                     <li class="page-item" th:classappend="${i == studyPage.getNumber()}? active"
-                        th:each="i: ${#numbers.sequence(0, studyPage.getTotalPages() - 1)}">
+                        th:each="i: ${#numbers.sequence(0, studyPage.getTotalPages())}">
                         <a th:href="@{'/search/study?keyword=' + ${keyword} + '&sort=' + ${sortProperty} + ',desc&page=' + ${i}}"
                            class="page-link" href="#" th:text="${i + 1}">1</a>
                     </li>

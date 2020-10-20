@@ -16,12 +16,14 @@ public class PackageDependencyTest {
     private static final String TAG = "..modules.tag..";
     private static final String ZONE = "..modules.zone..";
     private static final String MODULES = "com.studyhahoho.modules..";
+    private static final String MAIN = "..modules.main..";
+
 
 
     @ArchTest
     ArchRule studyPackageRule = classes().that().resideInAPackage(STUDY)
             .should().onlyBeAccessed().byClassesThat()
-            .resideInAnyPackage(STUDY, EVENT);
+            .resideInAnyPackage(STUDY, EVENT, MAIN);
 
     @ArchTest
     ArchRule modulePackageRule = classes().that().resideInAPackage(MODULES)
