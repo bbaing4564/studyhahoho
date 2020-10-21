@@ -2,7 +2,7 @@ package com.studyhahoho.modules.account;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.studyhahoho.WithAccount;
-import com.studyhahoho.infra.AbstractContainerBaseTest;
+import com.studyhahoho.infra.ContainerBaseTest;
 import com.studyhahoho.infra.MockMvcTest;
 import com.studyhahoho.modules.tag.Tag;
 import com.studyhahoho.modules.tag.TagForm;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @MockMvcTest
-class SettingsControllerTest extends AbstractContainerBaseTest {
+class SettingsControllerTest extends ContainerBaseTest {
 
     @Autowired MockMvc mockMvc;
     @Autowired AccountRepository accountRepository;
