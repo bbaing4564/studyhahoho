@@ -53,7 +53,7 @@ GRANT ALL PRIVILEGES ON DATABASE testdb TO testuser;
 | Category        | skill            |
 | --------------- | ---------------- |
 | Backend         | Springboot 2.3.3 |
-| Template Engine | Thymleaf         |
+| Template Engine | Thymeleaf         |
 | DB              | Spring Data JPA  |
 | Frontend        | bootstrap        |
 | Script          | javascript       |
